@@ -3,4 +3,8 @@
     <string name="title_main">Main</string>
     <string name="title_event">Event</string>
     <string name="title_season">Season</string>
+    <string name="txt_delve">Delve Event</string>
+    <string name="label_rank">Rank:</string>
+    <string name="label_char_name">Character Name:</string>
+    <string name="label_char_class">Character Class:</string>
 </resources>

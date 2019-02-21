@@ -1,5 +1,6 @@
-package com.poe.leagueviewer
+package com.poe.leagueviewer.data
 
+import com.poe.leagueviewer.model.LadderObject
 import com.poe.leagueviewer.model.League
 import com.poe.leagueviewer.model.LeagueMetaData
 import retrofit2.Call
@@ -14,4 +15,7 @@ interface Webservice {
 
     @GET("/leagues/{id}")
     fun league(@Path("id") id: String): Call<League>
+
+    @GET("ladders/{id}")
+    fun ladders(@Path("id") id: String): Call<LadderObject>
 }

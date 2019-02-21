@@ -1,10 +1,13 @@
-package com.poe.leagueviewer
+package com.poe.leagueviewer.data
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.poe.leagueviewer.model.Ladder
+import com.poe.leagueviewer.model.LadderObject
 import com.poe.leagueviewer.model.League
 import com.poe.leagueviewer.model.LeagueMetaData
+import com.poe.leagueviewer.utils.RetrofitFactory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,5 +38,24 @@ class LeagueRepository(private val webservice: Webservice) {
             }
         })
         return data
+    }
+
+    fun getLadders(id: String): LiveData<List<Ladder>> {
+        val data = MutableLiveData<List<Ladder>>()
+        webservice.ladders(id).enqueue(object : Callback<LadderObject> {
+            override fun onFailure(call: Call<LadderObject>, t: Throwable) {
+                Log.e("LeagueRepo", t.message)
+            }
+            override fun onResponse(call: Call<LadderObject>, response: Response<LadderObject>) {
+                data.value = response.body()?.entries
+            }
+        })
+        return data
+    }
+
+    companion object {
+        fun getInstance(): LeagueRepository {
+            return LeagueRepository(RetrofitFactory.getInstance().create(Webservice::class.java))
+        }
     }
 }

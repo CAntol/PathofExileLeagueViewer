@@ -14,8 +14,18 @@ import retrofit2.Response
 
 class LeagueRepository(private val webservice: Webservice) {
 
+    // TODO dumb implementation, make smarter
+    private val leaguesCache = mutableMapOf<String, LiveData<List<LeagueMetaData>>>()
+    private val leagueCache = mutableMapOf<String, LiveData<League>>()
+    private val ladderCache = mutableMapOf<String, LiveData<List<Ladder>>>()
+
     fun getLeagues(type: String): LiveData<List<LeagueMetaData>> {
+        leaguesCache[type]?.let {
+            return it
+        }
+
         val data = MutableLiveData<List<LeagueMetaData>>()
+        leaguesCache[type] = data
         webservice.leagueList(type).enqueue(object : Callback<List<LeagueMetaData>> {
             override fun onFailure(call: Call<List<LeagueMetaData>>, t: Throwable) {
                 Log.e("LeagueRepo", t.message)
@@ -28,7 +38,12 @@ class LeagueRepository(private val webservice: Webservice) {
     }
 
     fun getLeague(id: String): LiveData<League> {
+        leagueCache[id]?.let {
+            return it
+        }
+
         val data = MutableLiveData<League>()
+        leagueCache[id] = data
         webservice.league(id).enqueue(object : Callback<League> {
             override fun onFailure(call: Call<League>, t: Throwable) {
                 Log.e("LeagueRepo", t.message)
@@ -41,7 +56,12 @@ class LeagueRepository(private val webservice: Webservice) {
     }
 
     fun getLadders(id: String): LiveData<List<Ladder>> {
+        ladderCache[id]?.let {
+            return it
+        }
+
         val data = MutableLiveData<List<Ladder>>()
+        ladderCache[id] = data
         webservice.ladders(id).enqueue(object : Callback<LadderObject> {
             override fun onFailure(call: Call<LadderObject>, t: Throwable) {
                 Log.e("LeagueRepo", t.message)

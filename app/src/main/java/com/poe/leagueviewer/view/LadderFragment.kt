@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -19,7 +20,7 @@ import com.poe.leagueviewer.viewmodels.LeagueViewModel
 import com.poe.leagueviewer.viewmodels.LeagueViewModelFactory
 import java.lang.Exception
 
-class LeagueFragment : Fragment() {
+class LadderFragment : Fragment() {
 
     lateinit var viewModel: LeagueViewModel
 
@@ -39,14 +40,20 @@ class LeagueFragment : Fragment() {
             this.adapter = adapter
             addItemDecoration(DividerItemDecoration(context, (layoutManager as LinearLayoutManager).orientation))
         }
-        subscribeUi(adapter)
+        subscribeUi(view, adapter)
     }
 
-    private fun subscribeUi(adapter: LadderListAdapter) {
+    private fun subscribeUi(view: View, adapter: LadderListAdapter) {
         arguments?.getString(KEY_LEAGUE_ID)?.let {
             viewModel.getLadder(it).observe(this, Observer<List<Ladder>> { ladders ->
+                showContent(view)
                 adapter.submitList(ladders)
             })
         }
+    }
+
+    private fun showContent(view: View) {
+        view.findViewById<ProgressBar>(R.id.progress_bar).visibility = View.GONE
+        view.findViewById<RecyclerView>(R.id.list_ladder).visibility = View.VISIBLE
     }
 }

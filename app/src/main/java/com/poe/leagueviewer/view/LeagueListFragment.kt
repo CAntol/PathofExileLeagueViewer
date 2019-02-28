@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -40,25 +41,29 @@ class LeagueListFragment : Fragment() {
             this.adapter = adapter
             addItemDecoration(DividerItemDecoration(context, (layoutManager as LinearLayoutManager).orientation))
         }
-        subscribeUi(adapter)
+        subscribeUi(view, adapter)
     }
 
-    private fun subscribeUi(adapter: LeagueListAdapter) {
+    private fun subscribeUi(view: View, adapter: LeagueListAdapter) {
         arguments?.getString(KEY_TYPE)?.let {
             viewModel.getLeagues(it).observe(this, Observer<List<LeagueMetaData>> { data ->
+                showContent(view)
                 adapter.submitList(data)
             })
         }
     }
 
     private fun showLadder(id: String) {
-        val frag = LeagueFragment()
+        val frag = LadderFragment()
         frag.arguments = Bundle().apply { putString(KEY_LEAGUE_ID, id) }
-        activity?.let {
-            it.supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, frag, id)
-                .addToBackStack(null) // FIXME backstack busted
-                .commit()
-        }
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.replace(R.id.fragment_container, frag, id)
+            ?.addToBackStack(null)
+            ?.commit()
+    }
+
+    private fun showContent(view: View) {
+        view.findViewById<ProgressBar>(R.id.progress_bar).visibility = View.GONE
+        view.findViewById<RecyclerView>(R.id.list_leagues).visibility = View.VISIBLE
     }
 }

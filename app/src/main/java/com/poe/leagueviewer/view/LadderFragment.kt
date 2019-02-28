@@ -24,6 +24,13 @@ class LadderFragment : Fragment() {
 
     lateinit var viewModel: LeagueViewModel
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.getString(KEY_LEAGUE_ID)?.let {
+            activity?.actionBar?.title = getString(R.string.title_ladder, it)
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // TODO - DI
         val factory = LeagueViewModelFactory(LeagueRepository.getInstance())

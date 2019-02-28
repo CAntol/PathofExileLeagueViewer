@@ -25,6 +25,19 @@ class LeagueListFragment : Fragment() {
 
     lateinit var viewModel: LeagueViewModel
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setTitle()
+
+        activity?.supportFragmentManager?.let { fm ->
+            fm.addOnBackStackChangedListener {
+                if (fm.backStackEntryCount == 0) {
+                    setTitle()
+                }
+            }
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // TODO - DI
         val factory = LeagueViewModelFactory(LeagueRepository.getInstance())
@@ -65,5 +78,9 @@ class LeagueListFragment : Fragment() {
     private fun showContent(view: View) {
         view.findViewById<ProgressBar>(R.id.progress_bar).visibility = View.GONE
         view.findViewById<RecyclerView>(R.id.list_leagues).visibility = View.VISIBLE
+    }
+
+    private fun setTitle() {
+        activity?.actionBar?.title = getString(R.string.title_leagues)
     }
 }

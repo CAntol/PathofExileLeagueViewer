@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Path of Exile League Viewer</string>
+    <string name="title_leagues">Leagues</string>
+    <string name="title_ladder">%1$s Ladder</string>
     <string name="title_main">Main</string>
     <string name="title_event">Event</string>
     <string name="title_season">Season</string>

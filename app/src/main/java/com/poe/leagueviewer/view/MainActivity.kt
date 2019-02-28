@@ -1,6 +1,7 @@
 package com.poe.leagueviewer.view
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -59,6 +60,10 @@ class MainActivity : FragmentActivity() {
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
+        supportFragmentManager.addOnBackStackChangedListener {
+            actionBar?.setDisplayHomeAsUpEnabled(supportFragmentManager.backStackEntryCount > 0)
+        }
+
         savedInstanceState?.getString(SELECTED_TYPE)?.let {
             selectedType = it
         }
@@ -70,6 +75,14 @@ class MainActivity : FragmentActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putString(SELECTED_TYPE, getType(navigation.selectedItemId))
         super.onSaveInstanceState(outState)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            onBackPressed()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun getFragment(type: String) : Fragment {

@@ -5,11 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.poe.leagueviewer.viewmodels.LeagueViewModel
 import com.poe.leagueviewer.R
@@ -27,7 +26,7 @@ class LeagueListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        activity?.actionBar?.title = getString(R.string.title_leagues)
+        (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.title_leagues)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -42,10 +41,7 @@ class LeagueListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = LeagueListAdapter { id -> showLadder(id) }
-        view.findViewById<RecyclerView>(R.id.list_leagues).apply {
-            this.adapter = adapter
-            addItemDecoration(DividerItemDecoration(context, (layoutManager as LinearLayoutManager).orientation))
-        }
+        view.findViewById<RecyclerView>(R.id.list_leagues).adapter = adapter
         subscribeUi(view, adapter)
     }
 

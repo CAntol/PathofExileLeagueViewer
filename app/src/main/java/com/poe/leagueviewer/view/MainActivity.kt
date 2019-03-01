@@ -2,8 +2,8 @@ package com.poe.leagueviewer.view
 
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.poe.leagueviewer.R
 import com.poe.leagueviewer.utils.KEY_TYPE
@@ -13,7 +13,7 @@ private const val TYPE_MAIN = "main"
 private const val TYPE_EVENT = "event"
 private const val SELECTED_TYPE = "selectedType"
 
-class MainActivity : FragmentActivity() {
+class MainActivity : AppCompatActivity() {
 
     private var selectedType: String? = null
 
@@ -56,12 +56,12 @@ class MainActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setActionBar(findViewById(R.id.toolbar))
+        setSupportActionBar(toolbar)
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
         supportFragmentManager.addOnBackStackChangedListener {
-            actionBar?.setDisplayHomeAsUpEnabled(supportFragmentManager.backStackEntryCount > 0)
+            supportActionBar?.setDisplayHomeAsUpEnabled(supportFragmentManager.backStackEntryCount > 0)
         }
 
         savedInstanceState?.getString(SELECTED_TYPE)?.let {

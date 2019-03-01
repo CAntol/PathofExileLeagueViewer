@@ -15,7 +15,8 @@ import java.util.*
 class LeagueListAdapter(private val onClick: (String) -> Unit, private val loadUrl: (String) -> Unit)
     : ListAdapter<LeagueMetaData, LeagueListAdapter.ViewHolder>(LeagueListDiffCallback()) {
 
-    private val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+    private val formatIn = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+    private val formatOut = SimpleDateFormat("MMM d, yyyy", Locale.getDefault())
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position), onClick)
@@ -30,10 +31,18 @@ class LeagueListAdapter(private val onClick: (String) -> Unit, private val loadU
             itemView.apply {
                 findViewById<TextView>(R.id.txt_league_id).text = data.id
                 data.startAt?.let {
-                    findViewById<TextView>(R.id.txt_date_start).text = formatter.parse(it).toString()
+                    findViewById<TextView>(R.id.txt_date_start).text = getDate(it)
                 }
-                data.endAt?.let {
-                    findViewById<TextView>(R.id.txt_date_end).text = formatter.parse(it).toString()
+                val endDate = data.endAt
+                if (endDate == null) {
+                    findViewById<TextView>(R.id.label_date_end).visibility = View.GONE
+                    findViewById<TextView>(R.id.txt_date_end).visibility = View.GONE
+                } else {
+                    findViewById<TextView>(R.id.label_date_end).visibility = View.VISIBLE
+                    findViewById<TextView>(R.id.txt_date_end).apply {
+                        text = getDate(endDate)
+                        visibility = View.VISIBLE
+                    }
                 }
                 findViewById<TextView>(R.id.txt_forum_link).apply {
                     val url = data.url
@@ -54,6 +63,11 @@ class LeagueListAdapter(private val onClick: (String) -> Unit, private val loadU
                     data.id?.let { onClick(it) }
                 }
             }
+        }
+
+        private fun getDate(rawDate: String): String {
+            val dateTime = formatIn.parse(rawDate)
+            return formatOut.format(dateTime)
         }
     }
 

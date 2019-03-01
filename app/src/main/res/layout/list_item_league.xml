@@ -41,15 +41,15 @@
         android:layout_alignParentEnd="true"
         tools:text="2016-08-20"/>
 
-    <TextView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/txt_forum_link"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_delve"
-        android:layout_alignParentStart="true"
-        android:autoLink="web"
         android:visibility="gone"
-        tools:text="Forum Link"/>
+        android:text="@string/txt_view_on_poe"
+        tools:visibility="visible"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
     <TextView
         android:id="@+id/txt_delve"

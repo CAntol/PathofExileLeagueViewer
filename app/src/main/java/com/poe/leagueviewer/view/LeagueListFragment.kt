@@ -17,6 +17,7 @@ import com.poe.leagueviewer.data.LeagueRepository
 import com.poe.leagueviewer.model.LeagueMetaData
 import com.poe.leagueviewer.utils.KEY_LEAGUE_ID
 import com.poe.leagueviewer.utils.KEY_TYPE
+import com.poe.leagueviewer.utils.UrlUtil
 import com.poe.leagueviewer.viewmodels.LeagueViewModelFactory
 import java.lang.Exception
 
@@ -31,7 +32,7 @@ class LeagueListFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // TODO - DI
-        val factory = LeagueViewModelFactory(LeagueRepository.getInstance())
+        val factory = LeagueViewModelFactory(LeagueRepository.instance)
         viewModel = activity?.run {
             ViewModelProviders.of(this, factory).get(LeagueViewModel::class.java)
         } ?: throw Exception("Invalid Activity")
@@ -40,7 +41,11 @@ class LeagueListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val adapter = LeagueListAdapter { id -> showLadder(id) }
+        val adapter = LeagueListAdapter({ id -> showLadder(id) }, { url ->
+            context?.let { ctx ->
+                UrlUtil.instance.loadPage(ctx, url)
+            }
+        })
         view.findViewById<RecyclerView>(R.id.list_leagues).adapter = adapter
         subscribeUi(view, adapter)
     }

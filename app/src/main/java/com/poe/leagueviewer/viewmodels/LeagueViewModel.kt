@@ -8,8 +8,6 @@ import com.poe.leagueviewer.model.Ladder
 import com.poe.leagueviewer.model.League
 import com.poe.leagueviewer.model.LeagueMetaData
 
-private const val URL_CHAR = "https://www.pathofexile.com/account/view-profile/%s/characters?characterName=%s"
-
 class LeagueViewModel(private val repository: LeagueRepository) : ViewModel() {
 
     fun getLeague(id: String): LiveData<League> {
@@ -22,14 +20,5 @@ class LeagueViewModel(private val repository: LeagueRepository) : ViewModel() {
 
     fun getLadder(id: String): LiveData<PagedList<Ladder>> {
         return repository.getLadders(id)
-    }
-
-    fun loadLadder(ladder: Ladder): String? {
-        val accountName = ladder.account?.name
-        val charName = ladder.character?.name
-        if (!accountName.isNullOrEmpty() && !charName.isNullOrEmpty()) {
-            return String.format(URL_CHAR, accountName, charName)
-        }
-        return null
     }
 }

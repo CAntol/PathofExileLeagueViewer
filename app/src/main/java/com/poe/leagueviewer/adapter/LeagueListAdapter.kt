@@ -12,7 +12,8 @@ import com.poe.leagueviewer.model.LeagueMetaData
 import java.text.SimpleDateFormat
 import java.util.*
 
-class LeagueListAdapter(private val onClick: (String) -> Unit) : ListAdapter<LeagueMetaData, LeagueListAdapter.ViewHolder>(LeagueListDiffCallback()) {
+class LeagueListAdapter(private val onClick: (String) -> Unit, private val loadUrl: (String) -> Unit)
+    : ListAdapter<LeagueMetaData, LeagueListAdapter.ViewHolder>(LeagueListDiffCallback()) {
 
     private val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
 
@@ -39,7 +40,10 @@ class LeagueListAdapter(private val onClick: (String) -> Unit) : ListAdapter<Lea
                     if (url == null) {
                         visibility = View.GONE
                     } else {
-                        text = url
+                        text = context.getString(R.string.txt_view_on_poe)
+                        setOnClickListener {
+                            loadUrl(url)
+                        }
                         visibility = View.VISIBLE
                     }
                 }

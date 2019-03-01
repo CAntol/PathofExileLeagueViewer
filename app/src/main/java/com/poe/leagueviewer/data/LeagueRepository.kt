@@ -67,8 +67,8 @@ class LeagueRepository(private val poeApi: PoeApi) {
     }
 
     companion object {
-        fun getInstance(): LeagueRepository {
-            return LeagueRepository(RetrofitFactory.getInstance().create(PoeApi::class.java))
+        val instance: LeagueRepository by lazy {
+            LeagueRepository(RetrofitFactory.instance)
         }
     }
 }

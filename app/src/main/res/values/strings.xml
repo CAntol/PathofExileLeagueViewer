@@ -10,4 +10,5 @@
     <string name="label_char_name">Character Name:</string>
     <string name="label_char_class">Character Class:</string>
     <string name="error_ladder_load">Unable to load Character page</string>
+    <string name="txt_view_on_poe">View on PoE</string>
 </resources>

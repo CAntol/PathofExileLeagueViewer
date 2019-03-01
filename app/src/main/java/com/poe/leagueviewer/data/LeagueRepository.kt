@@ -3,8 +3,9 @@ package com.poe.leagueviewer.data
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.PagedList
+import androidx.paging.toLiveData
 import com.poe.leagueviewer.model.Ladder
-import com.poe.leagueviewer.model.LadderObject
 import com.poe.leagueviewer.model.League
 import com.poe.leagueviewer.model.LeagueMetaData
 import com.poe.leagueviewer.utils.RetrofitFactory
@@ -12,12 +13,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LeagueRepository(private val webservice: Webservice) {
+class LeagueRepository(private val poeApi: PoeApi) {
 
     // TODO dumb implementation, make smarter
     private val leaguesCache = mutableMapOf<String, LiveData<List<LeagueMetaData>>>()
     private val leagueCache = mutableMapOf<String, LiveData<League>>()
-    private val ladderCache = mutableMapOf<String, LiveData<List<Ladder>>>()
+    private val ladderCache = mutableMapOf<String, LiveData<PagedList<Ladder>>>()
 
     fun getLeagues(type: String): LiveData<List<LeagueMetaData>> {
         leaguesCache[type]?.let {
@@ -26,7 +27,7 @@ class LeagueRepository(private val webservice: Webservice) {
 
         val data = MutableLiveData<List<LeagueMetaData>>()
         leaguesCache[type] = data
-        webservice.leagueList(type).enqueue(object : Callback<List<LeagueMetaData>> {
+        poeApi.leagueList(type).enqueue(object : Callback<List<LeagueMetaData>> {
             override fun onFailure(call: Call<List<LeagueMetaData>>, t: Throwable) {
                 Log.e("LeagueRepo", t.message)
             }
@@ -44,7 +45,7 @@ class LeagueRepository(private val webservice: Webservice) {
 
         val data = MutableLiveData<League>()
         leagueCache[id] = data
-        webservice.league(id).enqueue(object : Callback<League> {
+        poeApi.league(id).enqueue(object : Callback<League> {
             override fun onFailure(call: Call<League>, t: Throwable) {
                 Log.e("LeagueRepo", t.message)
             }
@@ -55,27 +56,19 @@ class LeagueRepository(private val webservice: Webservice) {
         return data
     }
 
-    fun getLadders(id: String): LiveData<List<Ladder>> {
+    fun getLadders(id: String): LiveData<PagedList<Ladder>> {
         ladderCache[id]?.let {
             return it
         }
 
-        val data = MutableLiveData<List<Ladder>>()
+        val data = LadderDataSourceFactory(poeApi, id).toLiveData(20)
         ladderCache[id] = data
-        webservice.ladders(id).enqueue(object : Callback<LadderObject> {
-            override fun onFailure(call: Call<LadderObject>, t: Throwable) {
-                Log.e("LeagueRepo", t.message)
-            }
-            override fun onResponse(call: Call<LadderObject>, response: Response<LadderObject>) {
-                data.value = response.body()?.entries
-            }
-        })
         return data
     }
 
     companion object {
         fun getInstance(): LeagueRepository {
-            return LeagueRepository(RetrofitFactory.getInstance().create(Webservice::class.java))
+            return LeagueRepository(RetrofitFactory.getInstance().create(PoeApi::class.java))
         }
     }
 }

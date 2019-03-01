@@ -56,8 +56,10 @@ class LeagueListFragment : Fragment() {
 
     private fun showLadder(id: String) {
         val frag = LadderFragment()
+
         frag.arguments = Bundle().apply { putString(KEY_LEAGUE_ID, id) }
         activity?.supportFragmentManager?.beginTransaction()
+            ?.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right)
             ?.replace(R.id.fragment_container, frag, id)
             ?.addToBackStack(null)
             ?.commit()

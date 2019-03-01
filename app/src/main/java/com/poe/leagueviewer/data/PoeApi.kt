@@ -8,7 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface Webservice {
+interface PoeApi {
 
     @GET("/leagues")
     fun leagueList(@Query("type") type: String): Call<List<LeagueMetaData>>
@@ -17,5 +17,5 @@ interface Webservice {
     fun league(@Path("id") id: String): Call<League>
 
     @GET("ladders/{id}")
-    fun ladders(@Path("id") id: String): Call<LadderObject>
+    fun ladders(@Path("id") id: String, @Query("offset") offset: String): Call<LadderObject>
 }

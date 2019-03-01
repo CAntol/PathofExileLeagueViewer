@@ -8,7 +8,6 @@ import androidx.paging.toLiveData
 import com.poe.leagueviewer.model.Ladder
 import com.poe.leagueviewer.model.League
 import com.poe.leagueviewer.model.LeagueMetaData
-import com.poe.leagueviewer.utils.RetrofitFactory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -64,11 +63,5 @@ class LeagueRepository(private val poeApi: PoeApi) {
         val data = LadderDataSourceFactory(poeApi, id).toLiveData(20)
         ladderCache[id] = data
         return data
-    }
-
-    companion object {
-        val instance: LeagueRepository by lazy {
-            LeagueRepository(RetrofitFactory.instance)
-        }
     }
 }

@@ -39,12 +39,14 @@ class LadderListAdapter(private val onClick: (Ladder) -> Unit) : PagedListAdapte
                 findViewById<TextView>(R.id.txt_char_level).text = data.character?.level?.toString()
                 val image = if (data.online == true) R.drawable.ic_online else R.drawable.ic_offline
                 findViewById<ImageView>(R.id.img_status).setImageResource(image)
+                val imgDead = findViewById<ImageView>(R.id.img_dead)
                 if (data.dead == true) {
-                    val imgDead = findViewById<ImageView>(R.id.img_dead)
                     Glide.with(context)
                         .load("http://icons.iconarchive.com/icons/icons8/android/128/Healthcare-Skull-icon.png")
                         .into(imgDead)
                     imgDead.visibility = View.VISIBLE
+                } else {
+                    imgDead.visibility = View.GONE
                 }
                 setOnClickListener { onClick(data) }
             }

@@ -22,8 +22,8 @@ class LadderFragment : Fragment() {
 
     private val viewModel: LeagueViewModel by viewModel()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         arguments?.getString(KEY_LEAGUE_ID)?.let {
             (activity as? AppCompatActivity)?.supportActionBar?.title = getString(R.string.title_ladder, it)
         }

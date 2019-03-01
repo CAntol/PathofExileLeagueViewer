@@ -60,8 +60,9 @@ class MainActivity : AppCompatActivity() {
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
 
+        setupActionBar()
         supportFragmentManager.addOnBackStackChangedListener {
-            supportActionBar?.setDisplayHomeAsUpEnabled(supportFragmentManager.backStackEntryCount > 0)
+            setupActionBar()
         }
 
         savedInstanceState?.getString(SELECTED_TYPE)?.let {
@@ -98,5 +99,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun getType(itemId: Int) : String {
         return if (R.id.navigation_event == itemId) TYPE_EVENT else TYPE_MAIN
+    }
+
+    private fun setupActionBar() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(supportFragmentManager.backStackEntryCount > 0)
     }
 }

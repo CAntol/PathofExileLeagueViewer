@@ -17,94 +17,96 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp">
 
-    <TextView
-        android:id="@+id/label_rank"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:text="@string/label_rank"/>
+        <TextView
+            android:id="@+id/label_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/label_rank"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/txt_rank"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        tools:text="1"/>
+        <TextView
+            android:id="@+id/txt_rank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/colorAccent"
+            tools:text="1" />
 
-    <TextView
-        android:id="@+id/label_char_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/label_rank"
-        android:text="@string/label_char_name"/>
+        <TextView
+            android:id="@+id/label_char_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/label_rank"
+            android:text="@string/label_char_name"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/txt_char_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/label_rank"
-        tools:text="ThisCharName"/>
+        <TextView
+            android:id="@+id/txt_char_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/label_rank"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/colorAccent"
+            tools:text="ThisCharName" />
 
-    <TextView
-        android:id="@+id/label_char_class"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/label_char_name"
-        android:text="@string/label_char_class"/>
+        <TextView
+            android:id="@+id/label_char_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/label_char_name"
+            android:text="@string/label_char_class"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/txt_char_class"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/txt_char_name"
-        tools:text="Scion"/>
+        <TextView
+            android:id="@+id/txt_char_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_char_name"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/colorAccent"
+            tools:text="Scion" />
 
         <TextView
             android:id="@+id/label_char_level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/label_char_class"
-            android:text="@string/label_char_level"/>
+            android:text="@string/label_char_level"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txt_char_level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_below="@+id/txt_char_class"
-            tools:text="100"/>
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/colorAccent"
+            tools:text="100" />
 
         <TextView
             android:id="@+id/label_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/label_char_level"
-            android:text="@string/label_status"/>
+            android:text="@string/label_status"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/img_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/label_char_level"
-            android:layout_toEndOf="@+id/label_status"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="10dp"
-            tools:src="@drawable/ic_online"/>
-
-        <ImageView
-            android:id="@+id/img_dead"
             android:layout_width="@dimen/inline_icon_size"
             android:layout_height="@dimen/inline_icon_size"
             android:layout_below="@+id/txt_char_level"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="5dp"
-            android:visibility="gone"
-            tools:visibility="visible"
-            tools:src="@drawable/ic_dashboard_black_24dp"/>
+            tools:src="@drawable/ic_online"/>
 
     </RelativeLayout>
 

@@ -6,9 +6,8 @@
     <string name="title_event">Event</string>
     <string name="title_season">Season</string>
     <string name="txt_delve">Delve Event</string>
+    <string name="title_date_start_end">%1$s - %2$s</string>
     <string name="label_rank">Rank:</string>
-    <string name="label_date_start">Start:</string>
-    <string name="label_date_end">End:</string>
     <string name="label_char_name">Character Name:</string>
     <string name="label_char_class">Character Class:</string>
     <string name="label_char_level">Character Level:</string>

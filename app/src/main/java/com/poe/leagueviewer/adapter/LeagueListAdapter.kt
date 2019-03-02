@@ -30,20 +30,22 @@ class LeagueListAdapter(private val onClick: (String) -> Unit, private val loadU
         fun bind(data: LeagueMetaData, onClick: (String) -> Unit) {
             itemView.apply {
                 findViewById<TextView>(R.id.txt_league_id).text = data.id
+
+                val dateField = findViewById<TextView>(R.id.label_date)
+                fun hideField() { dateField.visibility = View.GONE }
                 data.startAt?.let {
-                    findViewById<TextView>(R.id.txt_date_start).text = getDate(it)
-                }
-                val endDate = data.endAt
-                if (endDate == null) {
-                    findViewById<TextView>(R.id.label_date_end).visibility = View.GONE
-                    findViewById<TextView>(R.id.txt_date_end).visibility = View.GONE
-                } else {
-                    findViewById<TextView>(R.id.label_date_end).visibility = View.VISIBLE
-                    findViewById<TextView>(R.id.txt_date_end).apply {
-                        text = getDate(endDate)
+                    val startString = getDate(it)
+                    val end = data.endAt
+                    val endString = when {
+                        end.isNullOrEmpty() -> "?"
+                        else -> getDate(end)
+                    }
+                    dateField.apply {
+                        text = context.getString(R.string.title_date_start_end, startString, endString)
                         visibility = View.VISIBLE
                     }
-                }
+                } ?: hideField()
+
                 findViewById<TextView>(R.id.txt_forum_link).apply {
                     val url = data.url
                     if (url == null) {

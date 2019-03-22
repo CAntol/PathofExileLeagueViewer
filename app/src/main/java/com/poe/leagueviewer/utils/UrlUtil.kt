@@ -24,10 +24,4 @@ class UrlUtil {
         builder.setToolbarColor(context.getColor(R.color.colorPrimary))
         builder.build().launchUrl(context, Uri.parse(url))
     }
-
-    companion object {
-        val instance: UrlUtil by lazy {
-            UrlUtil()
-        }
-    }
 }

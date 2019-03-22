@@ -16,11 +16,13 @@ import com.poe.leagueviewer.model.LeagueMetaData
 import com.poe.leagueviewer.utils.KEY_LEAGUE_ID
 import com.poe.leagueviewer.utils.KEY_TYPE
 import com.poe.leagueviewer.utils.UrlUtil
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class LeagueListFragment : Fragment() {
 
-    private val viewModel: LeagueViewModel by viewModel()
+    private val viewModel by sharedViewModel<LeagueViewModel>()
+    private val urlUtil by inject<UrlUtil>()
 
     override fun onResume() {
         super.onResume()
@@ -35,7 +37,7 @@ class LeagueListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val adapter = LeagueListAdapter({ id -> showLadder(id) }, { url ->
             context?.let { ctx ->
-                UrlUtil.instance.loadPage(ctx, url)
+                urlUtil.loadPage(ctx, url)
             }
         })
         view.findViewById<RecyclerView>(R.id.list_leagues).adapter = adapter

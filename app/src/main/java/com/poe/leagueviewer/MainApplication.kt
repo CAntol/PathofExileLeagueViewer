@@ -3,6 +3,7 @@ package com.poe.leagueviewer
 import android.app.Application
 import com.poe.leagueviewer.data.LeagueRepository
 import com.poe.leagueviewer.data.PoeApi
+import com.poe.leagueviewer.utils.UrlUtil
 import com.poe.leagueviewer.viewmodels.LeagueViewModel
 import com.squareup.leakcanary.LeakCanary
 import org.koin.android.ext.android.startKoin
@@ -15,7 +16,7 @@ class MainApplication: Application() {
 
     // Dependency Injection module
     private val diModule = module {
-
+        single { UrlUtil() }
         // PoeApi instance
         single { Retrofit.Builder()
             .baseUrl("http://api.pathofexile.com")

@@ -12,12 +12,23 @@
         android:layout_height="wrap_content"
         tools:visibility="gone"/>
 
+    <TextView
+        android:id="@+id/txt_no_leagues"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/txt_no_leagues"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/txt_large"
+        android:visibility="gone"
+        tools:visibility="visible"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_leagues"
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:context=".view.MainActivity"
         tools:listitem="@layout/list_item_league"
-        tools:visibility="visible"
+        tools:visibility="gone"
         style="@style/LoadingItemList" />
 </FrameLayout>

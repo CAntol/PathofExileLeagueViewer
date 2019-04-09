@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Path of Exile League Viewer</string>
+    <string name="app_name">POE League Viewer</string>
     <string name="title_leagues">Leagues</string>
     <string name="title_ladder">%1$s Ladder</string>
     <string name="title_main">Main</string>
@@ -14,4 +14,5 @@
     <string name="label_status">Status:</string>
     <string name="error_ladder_load">Unable to load Character page</string>
     <string name="txt_view_on_poe">View on PoE</string>
+    <string name="txt_no_leagues">No Active Leagues or POE is Down</string>
 </resources>

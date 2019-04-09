@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -47,7 +48,7 @@ class LeagueListFragment : Fragment() {
     private fun subscribeUi(view: View, adapter: LeagueListAdapter) {
         arguments?.getString(KEY_TYPE)?.let {
             viewModel.getLeagues(it).observe(this, Observer<List<LeagueMetaData>> { data ->
-                showContent(view)
+                showContent(view, data)
                 adapter.submitList(data)
             })
         }
@@ -64,8 +65,10 @@ class LeagueListFragment : Fragment() {
             ?.commit()
     }
 
-    private fun showContent(view: View) {
+    private fun showContent(view: View, data: List<LeagueMetaData>) {
+        val hasResults = data.isNotEmpty()
         view.findViewById<ProgressBar>(R.id.progress_bar).visibility = View.GONE
-        view.findViewById<RecyclerView>(R.id.list_leagues).visibility = View.VISIBLE
+        view.findViewById<TextView>(R.id.txt_no_leagues).visibility = if (hasResults) View.GONE else View.VISIBLE
+        view.findViewById<RecyclerView>(R.id.list_leagues).visibility = if (hasResults) View.VISIBLE else View.GONE
     }
 }

@@ -11,6 +11,7 @@ import com.poe.leagueviewer.model.LeagueMetaData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.RuntimeException
 
 class LeagueRepository(private val poeApi: PoeApi) {
 
@@ -29,9 +30,13 @@ class LeagueRepository(private val poeApi: PoeApi) {
         poeApi.leagueList(type).enqueue(object : Callback<List<LeagueMetaData>> {
             override fun onFailure(call: Call<List<LeagueMetaData>>, t: Throwable) {
                 Log.e("LeagueRepo", t.message)
+                data.value = emptyList()
+                leaguesCache.remove(type)
             }
             override fun onResponse(call: Call<List<LeagueMetaData>>, response: Response<List<LeagueMetaData>>) {
-                data.value = response.body()
+                response.body()?.let {
+                    data.value = it
+                } ?: onFailure(call, RuntimeException("Null response"))
             }
         })
         return data
@@ -47,9 +52,12 @@ class LeagueRepository(private val poeApi: PoeApi) {
         poeApi.league(id).enqueue(object : Callback<League> {
             override fun onFailure(call: Call<League>, t: Throwable) {
                 Log.e("LeagueRepo", t.message)
+                leagueCache.remove(id)
             }
             override fun onResponse(call: Call<League>, response: Response<League>) {
-                data.value = response.body()
+                response.body()?.let {
+                    data.value = it
+                } ?: onFailure(call, RuntimeException("Null response"))
             }
         })
         return data
